@@ -1,12 +1,58 @@
-﻿<Window x:Class="Clapper.MainWindow"
+﻿<!--
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. You just DO WHAT THE FUCK YOU WANT TO.
+-->
+
+<Window x:Class="Clapper.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clapper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Icon="pack://application:,,,/Clapper;component/Resources/clap.ico"
+        Title="Clapper" Height="270" Width="360"
+        ResizeMode="NoResize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Enter text here:" Margin="10, 0, 10, 0" />
+
+        <TextBox Grid.Row="1" Grid.Column="0" Margin="10, 0, 10, 10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!--
+            Since you can't copy & paste text from a label,
+            I had to use a modified TextBox
+        -->
+        <TextBox Grid.Row="2" Grid.Column="0"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                 Cursor="Arrow" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontFamily="Segoe UI Emoji"
+                 IsReadOnly="True" IsTabStop="False"
+                 Text="{Binding OutputText, UpdateSourceTrigger=PropertyChanged}" />
+
+        <StatusBar Grid.Row="3" Grid.Column="0">
+            <CheckBox IsChecked="{Binding AllCapital}" Content="Capitalize" />
+            <ComboBox ItemsSource="{Binding Source={x:Static local:MainWindow.ClapVariants}}" DisplayMemberPath="DisplayText" SelectedIndex="{Binding SelectedIndex}" />
+        </StatusBar>
     </Grid>
 </Window>
